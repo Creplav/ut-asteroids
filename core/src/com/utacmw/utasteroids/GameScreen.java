@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -17,18 +18,23 @@ public class GameScreen extends ScreenAdapter{
     SpriteBatch batch;
     Viewport viewport;
     Player player;
+    Texture background;
 
     @Override
     public void show() {
         // Set up the necessary objects
         batch = new SpriteBatch();
+        // Create the viewport
         viewport = new ExtendViewport(200, 200);
+        // Create the player
         player = new Player(viewport);
+        // Create the texture for the background
+        background = new Texture("background.png");
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        viewport.update(width, height, true);
     }
 
     @Override
@@ -49,6 +55,7 @@ public class GameScreen extends ScreenAdapter{
         batch.setProjectionMatrix(viewport.getCamera().combined);
         // Start the batch
         batch.begin();
+        batch.draw(background, 0, 0, viewport.getScreenWidth() / 2, viewport.getScreenHeight() / 2);
         // Draw the player
         player.draw(batch);
         batch.end();

@@ -41,7 +41,7 @@ public class Player {
         position = new Vector2();
         // Create the sprite for the player
         //TODO Replace the sprite
-        sprite = new Sprite(new Texture("badlogic.jpg"));
+        sprite = new Sprite(new Texture("rocket.png"));
         // Set the player's size to 50 by 50
         //TODO Change the values of the size based on what we decide later
         sprite.setSize(50, 50);
