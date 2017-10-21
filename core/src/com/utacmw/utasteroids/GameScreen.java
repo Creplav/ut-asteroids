@@ -40,8 +40,11 @@ public class GameScreen extends ScreenAdapter{
     public void render(float delta) {
         // Apply the viewport
         viewport.apply();
+        // Some OpenGL stuff. It needs to be there so don't touch this for now
         Gdx.gl.glClearColor(Color.rgb565(Color.RED), 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        player.update(delta);
         // Set the projection matrix
         batch.setProjectionMatrix(viewport.getCamera().combined);
         // Start the batch
@@ -49,7 +52,6 @@ public class GameScreen extends ScreenAdapter{
         // Draw the player
         player.draw(batch);
         batch.end();
-
     }
 
 
