@@ -7,7 +7,7 @@ Asteroids for UT's Hallowengineering
 1. Clone the repository 
    - Create a directory where you want the project to be saved
     - Navigate into the directory with the command line using cd /path/to/directory
-    - Clone the repository into the folder using: <code> git clone [link]</code>
+    - Clone the repository into the folder using: <code> git clone [link]</code> Just copy the URL of this tab without [ ]!
 2. Open the project in your IDE
     <p> Using Intellij or Android studio open the project from file -> open -> project </p>
     
