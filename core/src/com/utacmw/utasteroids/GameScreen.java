@@ -25,11 +25,18 @@ public class GameScreen extends ScreenAdapter {
         // Set up the necessary objects
         batch = new SpriteBatch();
         // Create the viewport
-        viewport = new ExtendViewport(200, 200);
+        viewport = new ExtendViewport(200,200);
         // Create the player
         player = new Player(viewport);
         // Create the texture for the background
         background = new Texture("background.png");
+        viewport.setScreenHeight(200);
+        viewport.setScreenWidth(200);
+        System.out.print(viewport.getScreenHeight());
+        System.out.print(viewport.getScreenWidth());
+        System.out.print("Game Screen");
+        System.out.print("\n");
+
     }
 
     @Override

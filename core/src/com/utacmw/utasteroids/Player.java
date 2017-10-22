@@ -2,6 +2,7 @@ package com.utacmw.utasteroids;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.loaders.SynchronousAssetLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,7 +20,7 @@ public class Player {
     private int lives;
     private final float MIN_SPEED = 0;
     private float speed;
-    private final float MAX_SPEED = 3;
+    private final float MAX_SPEED = 1;
     private final float ACCELERATION = 0.3f;
     private final float TURN_SPEED = 100.0f;
 
@@ -29,6 +30,8 @@ public class Player {
 
     private Rectangle bounds;
     private Rectangle screenBounds;
+
+    private float rotation;
 
     /**
      * Creates a new player
@@ -52,13 +55,25 @@ public class Player {
         // Set the origin to the center
         sprite.setOriginCenter();
         // Center the player
-        sprite.setPosition(viewport.getScreenWidth() / 2, viewport.getScreenHeight() / 2);
+        // X: ScreenWidth / 2 + SpriteSize / 2
+        // Y: ScreenHeight / 2 - SpriteSize / 2
+        sprite.setPosition( 112 , 88);
+        //set viewport width and height
+        viewport.setScreenHeight(200);
+        viewport.setScreenWidth(200);
+        //set bound
+        viewport.setScreenBounds(0,0,200,200);
+
+        System.out.print(viewport.getScreenHeight());
+        System.out.print(viewport.getScreenWidth());
+        System.out.print("Player Screen");
+        System.out.print("\n");
 
         //Sets the player's position to the sprite's x and y value
         this.position.x = sprite.getX();
         this.position.y = sprite.getY();
         bounds = sprite.getBoundingRectangle();
-        screenBounds = new Rectangle(0, 0, viewport.getScreenWidth(), viewport.getScreenHeight());
+        screenBounds = new Rectangle(0, 0, 100, 100);
     }
 
     /**
@@ -112,8 +127,17 @@ public class Player {
      */
     public void move(){
         //TODO Fix this because the math is bad somewhere
-        this.sprite.translateX(speed * MathUtils.cos(this.sprite.getRotation()));
-        this.sprite.translateY(speed * MathUtils.sin(this.sprite.getRotation()));
+        // keep getRotation value less than 360
+        if(this.sprite.getRotation() > 360 ){
+            rotation =  this.sprite.getRotation() % 360;
+        }else{
+            rotation =  this.sprite.getRotation();
+        }
+        this.sprite.translateX(-speed * (float)Math.sin(Math.toRadians(rotation)));
+        this.sprite.translateY(speed * (float)Math.cos(Math.toRadians(rotation)));
+
+
+
     }
 
 //    public void checkOffscreen(){
@@ -137,7 +161,7 @@ public class Player {
      */
     public void setPosition(Vector2 position){
         //TODO Decide if we need this
-        this.sprite.setPosition(this.position.x = position.x, this.position.y = position.y);
+        this.sprite.setPosition(this.position.x = position.x , this.position.y = position.y);
     }
 
     /**
