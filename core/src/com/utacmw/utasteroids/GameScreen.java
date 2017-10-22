@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Controls the screen for the game
  * @author Ben
  */
-public class GameScreen extends ScreenAdapter{
+public class GameScreen extends ScreenAdapter {
 
     SpriteBatch batch;
     Viewport viewport;

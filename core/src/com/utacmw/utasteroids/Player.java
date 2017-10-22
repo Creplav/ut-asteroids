@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -25,6 +26,9 @@ public class Player {
     private Sprite sprite;
     private Vector2 position;
     private Viewport viewport;
+
+    private Rectangle bounds;
+    private Rectangle screenBounds;
 
     /**
      * Creates a new player
@@ -48,12 +52,13 @@ public class Player {
         // Set the origin to the center
         sprite.setOriginCenter();
         // Center the player
-        sprite.setPosition(this.position.x - sprite.getWidth() / 2,
-                this.position.y - sprite.getHeight() / 2);
+        sprite.setPosition(viewport.getScreenWidth() / 2, viewport.getScreenHeight() / 2);
 
         //Sets the player's position to the sprite's x and y value
         this.position.x = sprite.getX();
         this.position.y = sprite.getY();
+        bounds = sprite.getBoundingRectangle();
+        screenBounds = new Rectangle(0, 0, viewport.getScreenWidth(), viewport.getScreenHeight());
     }
 
     /**
@@ -111,6 +116,21 @@ public class Player {
         this.sprite.translateY(speed * MathUtils.sin(this.sprite.getRotation()));
     }
 
+//    public void checkOffscreen(){
+//        if(bounds.getX() < screenBounds.getX()){
+//            sprite.setPosition(screenBounds.getWidth(), sprite.getY());
+//        }
+//        if(bounds.getX() > screenBounds.getWidth()){
+//            sprite.setPosition(screenBounds.getX(), sprite.getY());
+//        }
+//        if(bounds.getY() < screenBounds.getY()){
+//            sprite.setPosition(screenBounds.getX(), screenBounds.getHeight());
+//        }
+//        if(bounds.getY() > screenBounds.getHeight()){
+//            sprite.setPosition(screenBounds.getX(), screenBounds.getY());
+//        }
+//    }
+
     /**
      * Sets the player's position
      * @param position X and Y values for position
@@ -126,6 +146,7 @@ public class Player {
      */
     public void update(float delta){
        //TODO Check to see if the player is outside of the screen and if so wrap back around
+//        checkOffscreen();
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             turn(-TURN_SPEED * delta);
         }
