@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.loaders.SynchronousAssetLoader;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.PixmapPackerIO;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -63,7 +64,7 @@ public class Player {
         sprite.setPosition( viewport.getScreenWidth() / 2 + this.sprite.getWidth() / 2,
                 viewport.getScreenHeight() / 2 - this.sprite.getHeight() / 2);
         //set bound
-        viewport.setScreenBounds(0,0,200,200);
+        //viewport.setScreenBounds(0,0,200,200);
 
         System.out.print(viewport.getScreenHeight());
         System.out.print(viewport.getScreenWidth());
@@ -75,6 +76,9 @@ public class Player {
         this.position.y = sprite.getY();
         bounds = sprite.getBoundingRectangle();
         screenBounds = new Rectangle(0, 0, 100, 100);
+
+
+
     }
 
     /**
@@ -121,6 +125,7 @@ public class Player {
 
     private void shoot(){
         //TODO Set up the shooting
+
     }
 
     /**
@@ -135,9 +140,7 @@ public class Player {
         }
         this.sprite.translateX(-speed * (float)Math.sin(Math.toRadians(rotation)));
         this.sprite.translateY(speed * (float)Math.cos(Math.toRadians(rotation)));
-
-
-
+        wrap();
     }
 
 //    public void checkOffscreen(){
@@ -182,6 +185,9 @@ public class Player {
             move();
         }
         else decelerate();
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            shoot();
+        }
 
         //TODO Add in the hardware values to control movement and shooting
     }
@@ -192,5 +198,22 @@ public class Player {
     public void draw(SpriteBatch batch) {
         // Draw a temp image in the center of the screen
         sprite.draw(batch);
+    }
+
+    public void wrap(){
+        if(sprite.getX()> 200 + sprite.getHeight()){
+            sprite.setX(0 - sprite.getHeight());
+        }
+        if(sprite.getX()< 0 - sprite.getHeight()){
+            sprite.setX(200 + sprite.getHeight() - 1);
+        }
+
+
+        if(sprite.getY()> 200){
+            sprite.setY(0 - sprite.getHeight());
+        }
+        if(sprite.getY()< 0 -sprite.getHeight()) {
+            sprite.setY(200);
+        }
     }
 }
