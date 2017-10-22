@@ -18,6 +18,7 @@ public class GameScreen extends ScreenAdapter {
     SpriteBatch batch;
     Viewport viewport;
     Player player;
+    Ghost ghost;
     Texture background;
 
     @Override
@@ -28,6 +29,8 @@ public class GameScreen extends ScreenAdapter {
         viewport = new ExtendViewport(200, 200);
         // Create the player
         player = new Player(viewport);
+        //
+        ghost = new Ghost(player);
         // Create the texture for the background
         background = new Texture("background.png");
     }
@@ -51,6 +54,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         player.update(delta);
+        ghost.update(delta);
         // Set the projection matrix
         batch.setProjectionMatrix(viewport.getCamera().combined);
         // Start the batch
@@ -58,6 +62,7 @@ public class GameScreen extends ScreenAdapter {
         batch.draw(background, 0, 0, viewport.getScreenWidth() / 2, viewport.getScreenHeight() / 2);
         // Draw the player
         player.draw(batch);
+        ghost.draw(batch);
         batch.end();
     }
 
