@@ -21,8 +21,8 @@ public class Player {
     private final float MIN_SPEED = 0;
     private float speed;
     private final float MAX_SPEED = 1;
-    private final float ACCELERATION = 0.3f;
-    private final float TURN_SPEED = 100.0f;
+    private final float ACCELERATION = 0.7f;
+    private final float TURN_SPEED = 200.0f;
 
     private Sprite sprite;
     private Vector2 position;
@@ -54,13 +54,14 @@ public class Player {
         sprite.setSize(50, 50);
         // Set the origin to the center
         sprite.setOriginCenter();
-        // Center the player
-        // X: ScreenWidth / 2 + SpriteSize / 2
-        // Y: ScreenHeight / 2 - SpriteSize / 2
-        sprite.setPosition( 112 , 88);
         //set viewport width and height
         viewport.setScreenHeight(200);
         viewport.setScreenWidth(200);
+        // Center the player
+        // X: ScreenWidth / 2 + SpriteSize / 2
+        // Y: ScreenHeight / 2 - SpriteSize / 2
+        sprite.setPosition( viewport.getScreenWidth() / 2 + this.sprite.getWidth() / 2,
+                viewport.getScreenHeight() / 2 - this.sprite.getHeight() / 2);
         //set bound
         viewport.setScreenBounds(0,0,200,200);
 
@@ -102,7 +103,7 @@ public class Player {
      * Accelerates the player until the max speed is reached
      */
     public void accelerate(){
-        if(speed != MAX_SPEED)
+        if(speed < MAX_SPEED)
             speed += ACCELERATION;
         else
             speed = MAX_SPEED;
@@ -126,7 +127,6 @@ public class Player {
      * Moves the player in the direction it is facing
      */
     public void move(){
-        //TODO Fix this because the math is bad somewhere
         // keep getRotation value less than 360
         if(this.sprite.getRotation() > 360 ){
             rotation =  this.sprite.getRotation() % 360;

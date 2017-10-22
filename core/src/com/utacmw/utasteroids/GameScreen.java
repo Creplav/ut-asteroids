@@ -66,6 +66,8 @@ public class GameScreen extends ScreenAdapter {
         batch.setProjectionMatrix(viewport.getCamera().combined);
         // Start the batch
         batch.begin();
+        // TODO Fix resize issue where the background does not change with the size of the screen
+        // Draw the background
         batch.draw(background, 0, 0, viewport.getScreenWidth() / 2, viewport.getScreenHeight() / 2);
         // Draw the player
         player.draw(batch);
