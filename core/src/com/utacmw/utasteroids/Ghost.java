@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -21,6 +22,8 @@ public class Ghost {
     Viewport viewport;
     Vector2 position;
     Vector2 direction;
+    Rectangle bounds;
+    private int index;
 
     public Ghost(Viewport viewport, Player player){
         this.player = player;
@@ -37,7 +40,6 @@ public class Ghost {
         this.position.x = this.sprite.getX();
         this.position.y = this.sprite.getY();
         direction = new Vector2();
-
     }
 
     private float getRandomX(Random random){
@@ -57,7 +59,19 @@ public class Ghost {
     }
 
     //TODO Create a hit box and create children from hit
+    public boolean onCollision() {
+        if (this.bounds.overlaps(player.getBounds()) && !player.isInvincible()) {
+            System.out.println("Collision!");
+            return true;
+        }
+        return false;
+    }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getIndex() { return this.index; }
     /**
      * This method moves the ghost towards the player
      * @param delta
@@ -81,8 +95,12 @@ public class Ghost {
      * @param delta
      */
     public void update(float delta){
+        bounds = sprite.getBoundingRectangle();
         // Move the ghost
         move(delta);
+        if(onCollision()){
+            player.respawn();
+        }
     }
 
     public void draw(SpriteBatch batch){

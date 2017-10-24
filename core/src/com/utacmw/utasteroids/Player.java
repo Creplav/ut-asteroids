@@ -2,14 +2,13 @@ package com.utacmw.utasteroids;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.loaders.SynchronousAssetLoader;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.PixmapPackerIO;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
@@ -33,6 +32,8 @@ public class Player {
     private Rectangle screenBounds;
 
     private float rotation;
+    private boolean invincible;
+    public boolean isDestroyed = false;
 
     /**
      * Creates a new player
@@ -69,12 +70,10 @@ public class Player {
         //Sets the player's position to the sprite's x and y value
         this.position.x = sprite.getX();
         this.position.y = sprite.getY();
-        bounds = sprite.getBoundingRectangle();
         screenBounds = new Rectangle(0, 0, 100, 100);
-
-
-
     }
+
+    public Rectangle getBounds() { return this.bounds; }
 
     /**
      * Get the number of lives that the player has
@@ -152,11 +151,28 @@ public class Player {
         this.sprite.setPosition(this.position.x = position.x , this.position.y = position.y);
     }
 
+    private void invincibilityTimer(){
+        invincible = true;
+        Timer timer = new Timer();
+        timer.delay(5000);
+        invincible = false;
+    }
+    public boolean isInvincible() { return invincible; }
+    public void respawn() {
+        if(lives > 0){
+            lives--;
+            invincibilityTimer();
+            sprite.setPosition( viewport.getScreenWidth() / 2 + this.sprite.getWidth() / 2,
+                    viewport.getScreenHeight() / 2 - this.sprite.getHeight() / 2);
+        }
+        isDestroyed = true;
+    }
     /**
      * Updates the player every frame
      * @param delta the frame rate of the game
      */
     public void update(float delta){
+        bounds = sprite.getBoundingRectangle();
         updatePosition();
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             turn(-TURN_SPEED * delta);
@@ -181,7 +197,8 @@ public class Player {
      */
     public void draw(SpriteBatch batch) {
         // Draw a temp image in the center of the screen
-        sprite.draw(batch);
+        if(lives > 0)
+            sprite.draw(batch);
     }
 
     public void wrap(){

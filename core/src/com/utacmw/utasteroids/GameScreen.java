@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -21,6 +23,9 @@ public class GameScreen extends ScreenAdapter {
     Ghost ghost;
     Texture background;
 
+    Array<Ghost> ghosts;
+    Array<Player> players;
+
     @Override
     public void show() {
         // Set up the necessary objects
@@ -28,7 +33,9 @@ public class GameScreen extends ScreenAdapter {
         // Create the viewport
         viewport = new ExtendViewport(200,200);
         // Create the player
+        players = new DelayedRemovalArray<Player>();
         player = new Player(viewport);
+        players.add(player);
         //
         ghost = new Ghost(viewport, player);
         // Create the texture for the background
@@ -39,7 +46,17 @@ public class GameScreen extends ScreenAdapter {
         System.out.print(viewport.getScreenWidth());
         System.out.print("Game Screen");
         System.out.print("\n");
+        ghosts = new Array<Ghost>();
+        addGhosts(false);
 
+    }
+
+    public void addGhosts(boolean timer){
+        for(int i = 0; i < 5; i++){
+            Ghost ghost = new Ghost(viewport, player);
+            ghost.setIndex(i);
+            ghosts.add(ghost);
+        }
     }
 
     @Override
@@ -49,7 +66,6 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-
     }
 
     @Override
@@ -61,7 +77,11 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         player.update(delta);
-        ghost.update(delta);
+        for (Ghost ghost: ghosts) {
+            ghost.update(delta);
+            if(ghost.onCollision())
+                ghosts.removeIndex(ghost.getIndex());
+        }
         // Set the projection matrix
         batch.setProjectionMatrix(viewport.getCamera().combined);
         // Start the batch
@@ -71,7 +91,9 @@ public class GameScreen extends ScreenAdapter {
         batch.draw(background, 0, 0, viewport.getScreenWidth() / 2, viewport.getScreenHeight() / 2);
         // Draw the player
         player.draw(batch);
-        ghost.draw(batch);
+        for (Ghost ghost : ghosts){
+            ghost.draw(batch);
+        }
         batch.end();
     }
 
