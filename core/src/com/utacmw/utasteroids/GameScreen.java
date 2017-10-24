@@ -30,7 +30,7 @@ public class GameScreen extends ScreenAdapter {
         // Create the player
         player = new Player(viewport);
         //
-        ghost = new Ghost(player);
+        ghost = new Ghost(viewport, player);
         // Create the texture for the background
         background = new Texture("background.png");
         viewport.setScreenHeight(200);

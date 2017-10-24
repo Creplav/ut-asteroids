@@ -66,11 +66,6 @@ public class Player {
         //set bound
         //viewport.setScreenBounds(0,0,200,200);
 
-        System.out.print(viewport.getScreenHeight());
-        System.out.print(viewport.getScreenWidth());
-        System.out.print("Player Screen");
-        System.out.print("\n");
-
         //Sets the player's position to the sprite's x and y value
         this.position.x = sprite.getX();
         this.position.y = sprite.getY();
@@ -94,6 +89,11 @@ public class Player {
      * @return current position
      */
     public Vector2 getPosition() {return this.position; }
+
+    public void updatePosition() {
+        this.position.x = this.sprite.getX();
+        this.position.y = this.sprite.getY();
+    }
 
     /**
      * Turns the player in the direction specified
@@ -143,21 +143,6 @@ public class Player {
         wrap();
     }
 
-//    public void checkOffscreen(){
-//        if(bounds.getX() < screenBounds.getX()){
-//            sprite.setPosition(screenBounds.getWidth(), sprite.getY());
-//        }
-//        if(bounds.getX() > screenBounds.getWidth()){
-//            sprite.setPosition(screenBounds.getX(), sprite.getY());
-//        }
-//        if(bounds.getY() < screenBounds.getY()){
-//            sprite.setPosition(screenBounds.getX(), screenBounds.getHeight());
-//        }
-//        if(bounds.getY() > screenBounds.getHeight()){
-//            sprite.setPosition(screenBounds.getX(), screenBounds.getY());
-//        }
-//    }
-
     /**
      * Sets the player's position
      * @param position X and Y values for position
@@ -172,8 +157,7 @@ public class Player {
      * @param delta the frame rate of the game
      */
     public void update(float delta){
-       //TODO Check to see if the player is outside of the screen and if so wrap back around
-//        checkOffscreen();
+        updatePosition();
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             turn(-TURN_SPEED * delta);
         }
