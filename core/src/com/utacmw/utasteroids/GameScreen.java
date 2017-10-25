@@ -77,6 +77,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
 
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
@@ -111,8 +112,8 @@ public class GameScreen extends ScreenAdapter {
                 ghosts.add(ghost);
             }
 
-            System.out.print(ghosts.size);
-            System.out.print("\n");
+
+
         }
 
         for (Bullet bullet : bullets) {
@@ -142,7 +143,6 @@ public class GameScreen extends ScreenAdapter {
         if (player.getLives() <= 0) {
             gameOverOverlay.render(batch);
             Gdx.app.getApplicationListener().pause();
-
         }
     }
 }

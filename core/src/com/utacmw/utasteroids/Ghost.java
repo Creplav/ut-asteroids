@@ -72,14 +72,9 @@ public class Ghost {
         }
         return false;
     }
-    public boolean shot(){
-        if (this.bounds.overlaps(bullet.getBounds())) {
-            System.out.println("scored!");
-            return true;
-        }
-        return false;
 
-    }
+
+
 
     public void setIndex(int index) {
         this.index = index;
@@ -103,9 +98,7 @@ public class Ghost {
         this.sprite.setPosition(this.position.x, this.position.y);
 
     }
-    public void respam(){
-        sprite.setPosition(this.sprite.getX()-50,this.sprite.getY()-50);
-    }
+
 
     /**
      * Updates the ghost once per frame
