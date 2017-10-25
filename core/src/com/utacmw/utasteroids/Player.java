@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -38,7 +39,7 @@ public class Player {
     public boolean isDestroyed = false;
 
 
-    private ArrayList<Bullet> bullets;
+    private Array<Bullet> bullets;
     Ghost ghost;
 
 
@@ -46,7 +47,7 @@ public class Player {
      * Creates a new player
      * @param viewport
      */
-    public Player(Viewport viewport, ArrayList<Bullet> bullets){
+    public Player(Viewport viewport, Array<Bullet> bullets){
         // Set starting lives to 3
         lives = 3;
         // Set initial speed to 0

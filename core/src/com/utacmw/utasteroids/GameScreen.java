@@ -29,7 +29,7 @@ public class GameScreen extends ScreenAdapter {
 
     Array<Ghost> ghosts;
     Array<Player> players;
-    private ArrayList<Bullet> bullets;
+    private Array<Bullet> bullets;
     private final int MAX_BULLETS = 5;
 
 
@@ -44,7 +44,7 @@ public class GameScreen extends ScreenAdapter {
         viewport = new ExtendViewport(200,200);
         // Create the player
         players = new DelayedRemovalArray<Player>();
-        player = new Player(viewport,bullets);
+        player = new Player(viewport, bullets);
         players.add(player);
         //
         bullet = new Bullet(viewport,player);
@@ -55,7 +55,7 @@ public class GameScreen extends ScreenAdapter {
         viewport.setScreenHeight(200);
         viewport.setScreenWidth(200);
         ghosts = new Array<Ghost>();
-        bullets = new ArrayList<Bullet>();
+        bullets = new Array<Bullet>();
 
         addGhosts(false);
         gameOverOverlay = new GameOverOverlay();
@@ -63,7 +63,7 @@ public class GameScreen extends ScreenAdapter {
     }
     private void shoot(){
         //TODO Set up the shooting
-        if (bullets.size() == MAX_BULLETS) return;
+        if (bullets.size == MAX_BULLETS) return;
         bullets.add(new Bullet(viewport, player));
 
     }
@@ -98,11 +98,16 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         player.update(delta);
-        for (Ghost ghost: ghosts) {
+        this.bullet.setRotation(this.player.getRotation());
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+            shoot();
+
+        for (Ghost ghost : ghosts) {
             ghost.update(delta);
-            if(ghost. onCollision())
+            if (ghost.onCollision()) {
                 ghosts.removeValue(ghost, true);
-            if(ghosts.size < 1){
+            }
+            if (ghosts.size < 1) {
                 ghosts.add(ghost);
             }
 
@@ -110,24 +115,12 @@ public class GameScreen extends ScreenAdapter {
             System.out.print("\n");
         }
 
-        for(int i = 0; i < bullets.size();i++){
-            bullets.get(i).update(delta);
-            if(bullets.get(i).shouldRemove()){
-                bullets.remove(i);
-                i--;
+        for (Bullet bullet : bullets) {
+            bullet.update(delta);
+            if (bullet.shouldRemove()) {
+                bullets.removeValue(bullet, true);
             }
         }
-
-        for(int i = 0;i< bullets.size();i++){
-            Bullet b = bullets.get(i);
-            bullet.update(delta);
-
-        }
-
-
-
-
-
         // Set the projection matrix
         batch.setProjectionMatrix(viewport.getCamera().combined);
         // Start the batch
@@ -137,27 +130,20 @@ public class GameScreen extends ScreenAdapter {
         batch.draw(background, 0, 0, viewport.getScreenWidth() / 2, viewport.getScreenHeight() / 2);
         // Draw the player
         player.draw(batch);
-        for (Ghost ghost : ghosts){
+        for (Ghost ghost : ghosts) {
             ghost.draw(batch);
         }
 
-        for(Bullet bullet : bullets){
+        for (Bullet bullet : bullets) {
             bullet.draw(batch);
         }
 
         batch.end();
-        if(player.getLives() <= 0){
+        if (player.getLives() <= 0) {
             gameOverOverlay.render(batch);
             Gdx.app.getApplicationListener().pause();
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            this.bullet.setBrotation(this.player.getRotation());
-            shoot();
-
 
         }
-
-
     }
 }
+

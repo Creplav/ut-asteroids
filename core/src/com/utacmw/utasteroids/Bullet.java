@@ -22,9 +22,6 @@ public class Bullet {
     private float lifeTime;
     private float lifeTimer;
 
-
-
-
     Viewport viewport;
 
     Rectangle hitbox;
@@ -36,7 +33,7 @@ public class Bullet {
     private Vector2 position;
     private Player player;
     private Texture text;
-    private float Brotation;
+    private float rotation;
 
     private Rectangle bounds;
 
@@ -56,21 +53,21 @@ public class Bullet {
         this.position.y = this.sprite.getY();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            setBrotation(player.getRotation());
+            setRotation(player.getRotation());
         }
 
         position.x = this.player.getPosition().x + this.player.getHeight()/2- this.sprite.getWidth()/2;
         position.y = this.player.getPosition().y + this.player.getWidth()/2 - this.sprite.getWidth()/2;
 
-
+        hitbox = this.sprite.getBoundingRectangle();
 
     }
     public Rectangle getBounds() { return this.bounds; }
 
 
     private void move(float delta){
-            position.x += -speed * delta * (float) Math.sin(Math.toRadians(getBrotation()));
-            position.y += speed * delta * (float) Math.cos(Math.toRadians(getBrotation()));
+            position.x += -speed * delta * (float) Math.sin(Math.toRadians(getRotation()));
+            position.y += speed * delta * (float) Math.cos(Math.toRadians(getRotation()));
             this.sprite.setPosition(position.x, position.y);
 
     }
@@ -98,12 +95,12 @@ public class Bullet {
         sprite.draw(batch);
     }
 
-    public float setBrotation( float x){
-        Brotation = x;
+    public float setRotation( float x){
+        rotation = x;
         return x;
     }
-    public float getBrotation(){
-        return Brotation;
+    public float getRotation(){
+        return rotation;
     }
 
 
