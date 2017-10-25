@@ -1,6 +1,7 @@
 package com.utacmw.utasteroids;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,6 +11,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.ArrayList;
 
 /**
  * Controls the screen for the game
@@ -22,9 +25,14 @@ public class GameScreen extends ScreenAdapter {
     Player player;
     Ghost ghost;
     Texture background;
+    Bullet bullet;
 
     Array<Ghost> ghosts;
     Array<Player> players;
+    private ArrayList<Bullet> bullets;
+    private final int MAX_BULLETS = 4;
+
+
 
     GameOverOverlay gameOverOverlay;
 
@@ -36,21 +44,27 @@ public class GameScreen extends ScreenAdapter {
         viewport = new ExtendViewport(200,200);
         // Create the player
         players = new DelayedRemovalArray<Player>();
-        player = new Player(viewport);
+        player = new Player(viewport,bullets);
         players.add(player);
+        //
+        bullet = new Bullet(viewport,player);
         //
         ghost = new Ghost(viewport, player);
         // Create the texture for the background
         background = new Texture("background.png");
         viewport.setScreenHeight(200);
         viewport.setScreenWidth(200);
-        System.out.print(viewport.getScreenHeight());
-        System.out.print(viewport.getScreenWidth());
-        System.out.print("Game Screen");
-        System.out.print("\n");
         ghosts = new Array<Ghost>();
+        bullets = new ArrayList<Bullet>();
+
         addGhosts(false);
         gameOverOverlay = new GameOverOverlay();
+
+    }
+    private void shoot(){
+        //TODO Set up the shooting
+        if (bullets.size() == MAX_BULLETS) return;
+        bullets.add(new Bullet(viewport,player));
 
     }
 
@@ -61,6 +75,7 @@ public class GameScreen extends ScreenAdapter {
             ghosts.add(ghost);
         }
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -88,6 +103,15 @@ public class GameScreen extends ScreenAdapter {
         if(player.getLives() <= 0){
             gameOverOverlay.render(batch);
         }
+        for(int i = 0; i < bullets.size();i++){
+            bullets.get(i).update(delta);
+            if(bullets.get(i).shouldRemove()){
+                bullets.remove(i);
+                i--;
+            }
+        }
+
+
         // Set the projection matrix
         batch.setProjectionMatrix(viewport.getCamera().combined);
         // Start the batch
@@ -100,7 +124,24 @@ public class GameScreen extends ScreenAdapter {
         for (Ghost ghost : ghosts){
             ghost.draw(batch);
         }
+
+        for(int i = 0; i<bullets.size();i++){
+            bullets.get(i).draw(batch);
+        }
+
+
         batch.end();
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            shoot();
+        }
+
+
+
+
+
+
+
     }
 
 
