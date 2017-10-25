@@ -162,7 +162,7 @@ public class Player {
         this.sprite.setPosition(this.position.x = position.x , this.position.y = position.y);
     }
 
-    private void invincibilityTimer(){
+    public void invincibilityTimer(){
         invincible = true;
         Timer timer = new Timer();
         timer.delay(5000);

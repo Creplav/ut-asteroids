@@ -27,6 +27,8 @@ public class MenuScreen extends ScreenAdapter {
 
     GameScreen gameScreen;
 
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+
     public MenuScreen(Game game){
         this.game = game;
     }
@@ -40,7 +42,7 @@ public class MenuScreen extends ScreenAdapter {
         viewport = new ExtendViewport(700, 700);
         batch = new SpriteBatch();
         generator = new FreeTypeFontGenerator(Gdx.files.internal("dangerflight.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 50;
         parameter.color = Color.WHITE;
         font = generator.generateFont(parameter);
@@ -64,10 +66,22 @@ public class MenuScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
+        parameter.size = 50;
+        font = generator.generateFont(parameter);
         batch.begin();
         font.draw(batch, "Welcome to ACM-W's Asteroids!", viewport.getWorldWidth() / 2, viewport.getWorldHeight() - 10, 0, Align.center, false);
-        font.draw(batch, "Press SPACE to play!", viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2.5f, 0, Align.center, false);
+        font.draw(batch, "Space to shoot", viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 1.5f, 0, Align.center, false);
+        font.draw(batch, "Up, right, and left to move", viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 1.25f, 0, Align.center, false);
+        font.draw(batch, "Press SPACE to play!", viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0, Align.center, false);
         batch.end();
+
+        parameter.size = 30;
+        font = generator.generateFont(parameter);
+        batch.begin();
+        font.draw(batch, "Made by: Ben Doty, Naba Rizvi, and Yizhen Shi", viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 4, 0, Align.center, false);
+        batch.end();
+
+
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             game.setScreen(new GameScreen(game));
         }

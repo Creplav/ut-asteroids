@@ -43,7 +43,7 @@ public class GameOverOverlay {
         batch.begin();
         font.draw(batch, "Your score is: ", viewport.getWorldWidth() / 2, viewport.getWorldHeight() - 20, 0, Align.center, false);
         font.draw(batch, "" + score, viewport.getWorldWidth() / 2, viewport.getWorldHeight() - 80, 0, Align.center, false);
-        font.draw(batch, "GAME OVER", viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2.5f, 0, Align.center, false);
+        font.draw(batch, "GAME OVER", viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0, Align.center, false);
         font.draw(batch, "SPACE: Return to menu", viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 3.5f, 0, Align.center, false);
         batch.end();
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){

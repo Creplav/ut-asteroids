@@ -115,6 +115,7 @@ public class GameScreen extends ScreenAdapter {
             ghost.update(delta);
             if (ghost.onCollision()) {
                 ghosts.removeValue(ghost, true);
+                player.invincibilityTimer();
             }
         }
 
