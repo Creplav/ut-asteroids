@@ -100,9 +100,16 @@ public class GameScreen extends ScreenAdapter {
         player.update(delta);
         for (Ghost ghost: ghosts) {
             ghost.update(delta);
-            if(ghost.onCollision())
+            if(ghost. onCollision())
                 ghosts.removeValue(ghost, true);
+            if(ghosts.size < 1){
+                ghosts.add(ghost);
+            }
+
+            System.out.print(ghosts.size);
+            System.out.print("\n");
         }
+
         for(int i = 0; i < bullets.size();i++){
             bullets.get(i).update(delta);
             if(bullets.get(i).shouldRemove()){
@@ -110,6 +117,16 @@ public class GameScreen extends ScreenAdapter {
                 i--;
             }
         }
+
+        for(int i = 0;i< bullets.size();i++){
+            Bullet b = bullets.get(i);
+            bullet.update(delta);
+
+        }
+
+
+
+
 
         // Set the projection matrix
         batch.setProjectionMatrix(viewport.getCamera().combined);
@@ -138,6 +155,9 @@ public class GameScreen extends ScreenAdapter {
             this.bullet.setBrotation(this.player.getRotation());
             shoot();
 
+
         }
+
+
     }
 }

@@ -39,6 +39,7 @@ public class Player {
 
 
     private ArrayList<Bullet> bullets;
+    Ghost ghost;
 
 
     /**
@@ -166,8 +167,10 @@ public class Player {
         if(lives > 0){
             lives--;
             invincibilityTimer();
-            sprite.setPosition( viewport.getScreenWidth() / 2 + this.sprite.getWidth() / 2,
-                    viewport.getScreenHeight() / 2 - this.sprite.getHeight() / 2);
+            sprite.setPosition(this.sprite.getX()-50,this.sprite.getY()-50);
+
+
+
         }
         isDestroyed = true;
     }
@@ -189,6 +192,7 @@ public class Player {
             move();
         }
         else decelerate();
+
 
 
 

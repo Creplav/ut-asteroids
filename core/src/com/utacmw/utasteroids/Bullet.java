@@ -38,6 +38,7 @@ public class Bullet {
     private Texture text;
     private float Brotation;
 
+    private Rectangle bounds;
 
 
     public Bullet(Viewport viewport, Player player){
@@ -64,6 +65,7 @@ public class Bullet {
 
 
     }
+    public Rectangle getBounds() { return this.bounds; }
 
 
     private void move(float delta){
@@ -79,13 +81,14 @@ public class Bullet {
 
 
     public void update(float delta){
-
+        bounds = sprite.getBoundingRectangle();
         move(delta);
 
         lifeTimer += delta;
         if (lifeTimer > lifeTime){
             remove = true;
         }
+
 
     }
 
@@ -102,6 +105,9 @@ public class Bullet {
     public float getBrotation(){
         return Brotation;
     }
+
+
+
 
 
 

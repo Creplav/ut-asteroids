@@ -17,6 +17,7 @@ import java.util.Random;
 public class Ghost {
     Player player;
     Sprite sprite;
+    Bullet bullet;
     // Set the speed of the ghost
     float SPEED = 10.0f;
     Viewport viewport;
@@ -24,6 +25,9 @@ public class Ghost {
     Vector2 direction;
     Rectangle bounds;
     private int index;
+    private boolean remove;
+
+
 
     public Ghost(Viewport viewport, Player player){
         this.player = player;
@@ -32,7 +36,7 @@ public class Ghost {
         // Create a random number generator
         Random random = new Random();
         sprite.setOriginCenter();
-        sprite.setSize(25, 25);
+        sprite.setSize(15, 15);
         // TODO Make them appear outside of the screen
         // Set the position of the ghost
         sprite.setPosition(getRandomX(random), random.nextFloat() * 180);
@@ -58,6 +62,8 @@ public class Ghost {
         return 0;
     }
 
+
+
     //TODO Create a hit box and create children from hit
     public boolean onCollision() {
         if (this.bounds.overlaps(player.getBounds()) && !player.isInvincible()) {
@@ -65,6 +71,14 @@ public class Ghost {
             return true;
         }
         return false;
+    }
+    public boolean shot(){
+        if (this.bounds.overlaps(bullet.getBounds())) {
+            System.out.println("scored!");
+            return true;
+        }
+        return false;
+
     }
 
     public void setIndex(int index) {
@@ -89,6 +103,9 @@ public class Ghost {
         this.sprite.setPosition(this.position.x, this.position.y);
 
     }
+    public void respam(){
+        sprite.setPosition(this.sprite.getX()-50,this.sprite.getY()-50);
+    }
 
     /**
      * Updates the ghost once per frame
@@ -101,10 +118,14 @@ public class Ghost {
         if(onCollision()){
             player.respawn();
         }
+
+
+
     }
 
     public void draw(SpriteBatch batch){
         //Draw the ghost to the screen
         sprite.draw(batch);
     }
+
 }
