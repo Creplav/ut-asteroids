@@ -42,8 +42,6 @@ public class Bullet {
         this.player = player;
         sprite = new Sprite(new Texture("fireball.png"));
         this.viewport = viewport;
-
-        //TODO change the size of fireball
         sprite.setSize(5, 5);
         lifeTime = 1;
         lifeTimer = 0;

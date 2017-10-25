@@ -20,10 +20,10 @@ public class HUD {
 
 
     public HUD() {
-        this.viewport = new ExtendViewport(100, 100);
+        this.viewport = new ExtendViewport(500, 500);
         generator = new FreeTypeFontGenerator(Gdx.files.internal("dangerflight.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 7;
+        parameter.size = 24;
         parameter.color = Color.WHITE;
         font = generator.generateFont(parameter);
     }
@@ -37,8 +37,8 @@ public class HUD {
         viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
-        font.draw(batch, "Score:  " + score, 0, viewport.getWorldHeight() - 5, 0, Align.left, false);
-        font.draw(batch, "Lives:  " + lives, 0, viewport.getWorldHeight() - 15, 0, Align.left, false);
+        font.draw(batch, "Score:  " + score, 0, viewport.getWorldHeight() - 20, 0, Align.left, false);
+        font.draw(batch, "Lives:  " + lives, 0, viewport.getWorldHeight() - 50, 0, Align.left, false);
         batch.end();
     }
 }

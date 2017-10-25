@@ -11,7 +11,7 @@ public class UtAsteroidsGame extends Game {
 		Gdx.app.setLogLevel(Application.LOG_INFO);
 		// Set the main screen as the game screen
 		//TODO Change this to the menu screen
-		setScreen(new GameScreen());
+		setScreen(new MenuScreen(this));
 
 		//TODO Create a menu screen
 	}

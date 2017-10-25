@@ -1,5 +1,6 @@
 package com.utacmw.utasteroids;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -36,6 +37,12 @@ public class GameScreen extends ScreenAdapter {
     GameOverOverlay gameOverOverlay;
     HUD hud;
 
+    Game game;
+
+    public GameScreen(Game game){
+        this.game = game;
+    }
+
     @Override
     public void show() {
         // Set up the necessary objects
@@ -61,7 +68,6 @@ public class GameScreen extends ScreenAdapter {
 
     }
     private void shoot(){
-        //TODO Set up the shooting
         if (bullets.size == MAX_BULLETS) return;
         bullets.add(new Bullet(viewport, player));
 
@@ -143,7 +149,7 @@ public class GameScreen extends ScreenAdapter {
 
         batch.end();
         if (player.getLives() <= 0) {
-            gameOverOverlay.render(batch, score);
+            gameOverOverlay.render(batch, score, game, this);
             Gdx.app.getApplicationListener().pause();
         }
         if(player.getLives() > 0){

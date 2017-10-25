@@ -16,17 +16,13 @@ import java.util.Random;
 public class Ghost {
     Player player;
     Sprite sprite;
-    Bullet bullet;
     // Set the speed of the ghost
-    float SPEED = 10.0f;
+    float SPEED = 20.0f;
     Viewport viewport;
     Vector2 position;
     Vector2 direction;
     Rectangle bounds;
     private int index;
-    private boolean remove;
-
-
 
     public Ghost(Viewport viewport, Player player){
         this.player = player;
@@ -38,7 +34,7 @@ public class Ghost {
         sprite.setSize(15, 15);
         // TODO Make them appear outside of the screen
         // Set the position of the ghost
-        sprite.setPosition(getRandomX(random), random.nextFloat() * 180);
+        sprite.setPosition(getRandomX(random), getRandomY(random));
         position = new Vector2();
         this.position.x = this.sprite.getX();
         this.position.y = this.sprite.getY();
@@ -46,24 +42,35 @@ public class Ghost {
     }
 
     private float getRandomX(Random random){
-        int number = random.nextInt(1);
+        int number = random.nextInt(10);
         Gdx.app.log(this.getClass().getName(), "Number: " + number);
-        switch (number){
-            case 0:
-                float randomNumber = random.nextFloat();
-                Gdx.app.log("GHOST", "Random Number: " + randomNumber);
-                float x = randomNumber + this.viewport.getScreenWidth() + this.sprite.getWidth();
-                Gdx.app.log("GHOST", "X: " + x);
-                return x;
-            case 1:
-                return random.nextFloat() - this.viewport.getScreenWidth() - this.sprite.getWidth();
+        if(number < 5) {
+            float randomNumber = random.nextFloat();
+            Gdx.app.log("GHOST", "Random Number: " + randomNumber);
+            float x = randomNumber + this.viewport.getScreenWidth() + this.sprite.getWidth();
+            Gdx.app.log("GHOST", "X: " + x);
+            return x;
         }
-        return 0;
+        else {
+            return random.nextFloat() - this.viewport.getScreenWidth() -this.sprite.getWidth();
+        }
     }
 
+    private float getRandomY(Random random){
+        int number = random.nextInt(10);
+        Gdx.app.log(this.getClass().getName(), "Number: " + number);
+        if(number < 5) {
+            float randomNumber = random.nextFloat();
+            Gdx.app.log("GHOST", "Random Number: " + randomNumber);
+            float y = randomNumber + this.viewport.getScreenHeight() + this.sprite.getHeight();
+            Gdx.app.log("GHOST", "Y: " + y);
+            return y;
+        }
+         else {
+            return random.nextFloat() - this.viewport.getScreenHeight() - this.sprite.getHeight();
+        }
+    }
 
-
-    //TODO Create a hit box and create children from hit
     public boolean onCollision() {
         if (this.bounds.overlaps(player.getBounds()) && !player.isInvincible()) {
             System.out.println("Collision!");
@@ -120,9 +127,6 @@ public class Ghost {
         if(onCollision()){
             player.respawn();
         }
-
-
-
     }
 
     public void draw(SpriteBatch batch){

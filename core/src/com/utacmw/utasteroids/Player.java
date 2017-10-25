@@ -168,6 +168,7 @@ public class Player {
         timer.delay(5000);
         invincible = false;
     }
+    //TODO Invincibility
     public boolean isInvincible() { return invincible; }
     public void respawn() {
         if(lives > 0){
@@ -186,8 +187,8 @@ public class Player {
      */
     public void update(float delta){
         bounds = sprite.getBoundingRectangle();
-        bounds.x -= 20;
-        bounds.y -= 20;
+        bounds.x = sprite.getBoundingRectangle().x - 40;
+        bounds.y = sprite.getBoundingRectangle().y - 30;
         updatePosition();
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             turn(-TURN_SPEED * delta);
