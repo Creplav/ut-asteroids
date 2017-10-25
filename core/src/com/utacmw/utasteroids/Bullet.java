@@ -30,12 +30,13 @@ public class Bullet {
     Rectangle hitbox;
     private boolean remove;
 
-    private final float speed = 200;
+    private final float speed = 350;
 
     private Sprite sprite;
     private Vector2 position;
     private Player player;
     private Texture text;
+    private float Brotation;
 
 
 
@@ -44,11 +45,8 @@ public class Bullet {
         sprite = new Sprite(new Texture("fireball.png"));
         this.viewport = viewport;
 
-
-
-
-
-        sprite.setSize(10, 10);
+        //TODO change the size of fireball
+        sprite.setSize(5, 5);
         lifeTime = 1;
         lifeTimer = 0;
 
@@ -56,19 +54,22 @@ public class Bullet {
         this.position.x = this.sprite.getX();
         this.position.y = this.sprite.getY();
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            setBrotation(player.getRotation());
+        }
 
         position.x = this.player.getPosition().x + this.player.getHeight()/2- this.sprite.getWidth()/2;
         position.y = this.player.getPosition().y + this.player.getWidth()/2 - this.sprite.getWidth()/2;
+
+
 
     }
 
 
     private void move(float delta){
-
-
-        position.x += -speed * delta * (float)Math.sin(Math.toRadians(player.getRotation()));
-        position.y += speed * delta * (float)Math.cos(Math.toRadians(player.getRotation()));
-        this.sprite.setPosition(this.position.x, this.position.y);
+            position.x += -speed * delta * (float) Math.sin(Math.toRadians(getBrotation()));
+            position.y += speed * delta * (float) Math.cos(Math.toRadians(getBrotation()));
+            this.sprite.setPosition(position.x, position.y);
 
     }
 
@@ -78,12 +79,14 @@ public class Bullet {
 
 
     public void update(float delta){
+
         move(delta);
 
         lifeTimer += delta;
         if (lifeTimer > lifeTime){
             remove = true;
         }
+
     }
 
 
@@ -91,6 +94,16 @@ public class Bullet {
     public void draw(SpriteBatch batch){
         sprite.draw(batch);
     }
+
+    public float setBrotation( float x){
+        Brotation = x;
+        return x;
+    }
+    public float getBrotation(){
+        return Brotation;
+    }
+
+
 
 
 

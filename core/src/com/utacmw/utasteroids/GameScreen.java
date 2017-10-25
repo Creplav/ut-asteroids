@@ -30,7 +30,7 @@ public class GameScreen extends ScreenAdapter {
     Array<Ghost> ghosts;
     Array<Player> players;
     private ArrayList<Bullet> bullets;
-    private final int MAX_BULLETS = 4;
+    private final int MAX_BULLETS = 5;
 
 
 
@@ -133,7 +133,9 @@ public class GameScreen extends ScreenAdapter {
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            this.bullet.setBrotation(this.player.getRotation());
             shoot();
+
         }
 
 
