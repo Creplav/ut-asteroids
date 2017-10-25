@@ -31,10 +31,10 @@ public class GameScreen extends ScreenAdapter {
     Array<Player> players;
     private Array<Bullet> bullets;
     private final int MAX_BULLETS = 5;
-
-
+    public int score = 0;
 
     GameOverOverlay gameOverOverlay;
+    HUD hud;
 
     @Override
     public void show() {
@@ -57,6 +57,7 @@ public class GameScreen extends ScreenAdapter {
         // Add ghosts
         addGhosts(false);
         gameOverOverlay = new GameOverOverlay();
+        hud = new HUD();
 
     }
     private void shoot(){
@@ -74,18 +75,18 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-
-
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
         gameOverOverlay.viewport.update(width, height, true);
+        hud.viewport.update(width, height, true);
     }
 
     @Override
     public void dispose() {
         batch.dispose();
         gameOverOverlay.dispose();
+        hud.dispose();
     }
 
     @Override
@@ -116,6 +117,7 @@ public class GameScreen extends ScreenAdapter {
             for(Ghost ghost : ghosts){
                 if(ghost.onCollision(bullet)){
                     ghosts.removeValue(ghost, true);
+                    score += 5;
                 }
             }
             if(bullet.shouldRemove()) {
@@ -141,9 +143,13 @@ public class GameScreen extends ScreenAdapter {
 
         batch.end();
         if (player.getLives() <= 0) {
-            gameOverOverlay.render(batch);
+            gameOverOverlay.render(batch, score);
             Gdx.app.getApplicationListener().pause();
         }
+        if(player.getLives() > 0){
+            hud.render(batch, score, player.getLives());
+        }
+
     }
 }
 
