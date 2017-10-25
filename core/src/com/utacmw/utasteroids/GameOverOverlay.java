@@ -16,27 +16,30 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 public class GameOverOverlay {
-    Viewport viewport;
+    public final Viewport viewport;
     BitmapFont font;
+    FreeTypeFontGenerator generator;
+
 
     public GameOverOverlay() {
-        this.viewport = new ExtendViewport(200, 200);
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("dangerflight.ttf"));
+        this.viewport = new ExtendViewport(100, 100);
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("dangerflight.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 24;
         parameter.color = Color.WHITE;
         font = generator.generateFont(parameter);
-        generator.dispose();
     }
 
     public void dispose() {
         font.dispose();
+        generator.dispose();
     }
+
     public void render(SpriteBatch batch){
-        viewport.apply(true);
+        viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
-        font.draw(batch, "GAME OVER", viewport.getScreenWidth() / 2, viewport.getScreenHeight() / 2, 0, Align.center, false);
+        font.draw(batch, "GAME OVER", viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2.5f, 0, Align.center, false);
         batch.end();
     }
 }

@@ -64,7 +64,7 @@ public class GameScreen extends ScreenAdapter {
     private void shoot(){
         //TODO Set up the shooting
         if (bullets.size() == MAX_BULLETS) return;
-        bullets.add(new Bullet(viewport,player));
+        bullets.add(new Bullet(viewport, player));
 
     }
 
@@ -80,6 +80,7 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
+        gameOverOverlay.viewport.update(width, height, true);
     }
 
     @Override
@@ -102,9 +103,6 @@ public class GameScreen extends ScreenAdapter {
             if(ghost.onCollision())
                 ghosts.removeValue(ghost, true);
         }
-        if(player.getLives() <= 0){
-            gameOverOverlay.render(batch);
-        }
         for(int i = 0; i < bullets.size();i++){
             bullets.get(i).update(delta);
             if(bullets.get(i).shouldRemove()){
@@ -112,7 +110,6 @@ public class GameScreen extends ScreenAdapter {
                 i--;
             }
         }
-
 
         // Set the projection matrix
         batch.setProjectionMatrix(viewport.getCamera().combined);
@@ -127,25 +124,18 @@ public class GameScreen extends ScreenAdapter {
             ghost.draw(batch);
         }
 
-        for(int i = 0; i<bullets.size();i++){
-            bullets.get(i).draw(batch);
+        for(Bullet bullet : bullets){
+            bullet.draw(batch);
         }
 
-
         batch.end();
+        if(player.getLives() <= 0){
+            gameOverOverlay.render(batch);
+            Gdx.app.getApplicationListener().pause();
+        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             shoot();
         }
-
-
-
-
-
-
-
     }
-
-
-
 }
