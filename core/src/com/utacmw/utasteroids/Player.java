@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+
 /**
  * Class for the player
  * @author Ben
@@ -35,11 +37,15 @@ public class Player {
     private boolean invincible;
     public boolean isDestroyed = false;
 
+
+    private ArrayList<Bullet> bullets;
+
+
     /**
      * Creates a new player
      * @param viewport
      */
-    public Player(Viewport viewport){
+    public Player(Viewport viewport, ArrayList<Bullet> bullets){
         // Set starting lives to 3
         lives = 3;
         // Set initial speed to 0
@@ -66,6 +72,8 @@ public class Player {
                 viewport.getScreenHeight() / 2 - this.sprite.getHeight() / 2);
         //set bound
         //viewport.setScreenBounds(0,0,200,200);
+
+        this.bullets = bullets;
 
         //Sets the player's position to the sprite's x and y value
         this.position.x = sprite.getX();
@@ -122,10 +130,8 @@ public class Player {
             speed = MIN_SPEED;
     }
 
-    private void shoot(){
-        //TODO Set up the shooting
 
-    }
+
 
     /**
      * Moves the player in the direction it is facing
@@ -185,9 +191,8 @@ public class Player {
             move();
         }
         else decelerate();
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            shoot();
-        }
+
+
 
         //TODO Add in the hardware values to control movement and shooting
     }
@@ -199,6 +204,7 @@ public class Player {
         // Draw a temp image in the center of the screen
         if(lives > 0)
             sprite.draw(batch);
+
     }
 
     public void wrap(){
@@ -217,4 +223,8 @@ public class Player {
             sprite.setY(200);
         }
     }
+
+    public float getRotation(){return rotation;}
+    public float getHeight(){return this.sprite.getHeight();}
+    public float getWidth(){return this.sprite.getWidth();}
 }
