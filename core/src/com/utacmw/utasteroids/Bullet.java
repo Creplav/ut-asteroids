@@ -64,8 +64,11 @@ public class Bullet {
 
 
 
+
+
+
     }
-    public Rectangle getBounds() { return this.bounds; }
+
 
 
     private void move(float delta){
@@ -81,13 +84,24 @@ public class Bullet {
 
 
     public void update(float delta){
-        bounds = sprite.getBoundingRectangle();
+        if(sprite.getBoundingRectangle() != null){
+            bounds = sprite.getBoundingRectangle();
+        }else if(sprite.getBoundingRectangle() == null)
+        {
+            bounds = new Rectangle (0,0,5,5);
+        }
+
         move(delta);
 
         lifeTimer += delta;
         if (lifeTimer > lifeTime){
             remove = true;
         }
+        System.out.print(getBounds());
+        System.out.print("\n");
+
+
+
 
 
     }
@@ -105,7 +119,7 @@ public class Bullet {
     public float getBrotation(){
         return Brotation;
     }
-
+    public Rectangle getBounds() { return bounds; }
 
 
 

@@ -107,6 +107,11 @@ public class Player {
      */
     public void turn(float degrees){
         this.sprite.rotate(degrees);
+        if(this.sprite.getRotation() > 360 ){
+            rotation =  this.sprite.getRotation() % 360;
+        }else{
+            rotation =  this.sprite.getRotation();
+        }
     }
 
     /**

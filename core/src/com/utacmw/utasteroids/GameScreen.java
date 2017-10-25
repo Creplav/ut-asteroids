@@ -77,6 +77,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
 
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
@@ -106,8 +107,8 @@ public class GameScreen extends ScreenAdapter {
                 ghosts.add(ghost);
             }
 
-            System.out.print(ghosts.size);
-            System.out.print("\n");
+
+
         }
 
         for(int i = 0; i < bullets.size();i++){
@@ -154,8 +155,12 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             this.bullet.setBrotation(this.player.getRotation());
             shoot();
-
-
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
+            this.bullet.setBrotation(this.player.getRotation());
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
+            this.bullet.setBrotation(this.player.getRotation());
         }
 
 
