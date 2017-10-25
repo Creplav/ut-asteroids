@@ -48,15 +48,13 @@ public class GameScreen extends ScreenAdapter {
         players.add(player);
         //
         bullet = new Bullet(viewport,player);
-        //
-        ghost = new Ghost(viewport, player);
         // Create the texture for the background
         background = new Texture("background.png");
         viewport.setScreenHeight(200);
         viewport.setScreenWidth(200);
         ghosts = new Array<Ghost>();
         bullets = new Array<Bullet>();
-
+        // Add ghosts
         addGhosts(false);
         gameOverOverlay = new GameOverOverlay();
 
@@ -103,22 +101,24 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
             shoot();
 
+        if (ghosts.size < 1) {
+            addGhosts(false);
+        }
         for (Ghost ghost : ghosts) {
             ghost.update(delta);
             if (ghost.onCollision()) {
                 ghosts.removeValue(ghost, true);
             }
-            if (ghosts.size < 1) {
-                ghosts.add(ghost);
-            }
-
-
-
         }
 
         for (Bullet bullet : bullets) {
             bullet.update(delta);
-            if (bullet.shouldRemove()) {
+            for(Ghost ghost : ghosts){
+                if(ghost.onCollision(bullet)){
+                    ghosts.removeValue(ghost, true);
+                }
+            }
+            if(bullet.shouldRemove()) {
                 bullets.removeValue(bullet, true);
             }
         }

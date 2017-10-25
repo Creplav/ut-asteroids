@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import java.util.Random;
 
 /**
@@ -67,6 +66,14 @@ public class Ghost {
     //TODO Create a hit box and create children from hit
     public boolean onCollision() {
         if (this.bounds.overlaps(player.getBounds()) && !player.isInvincible()) {
+            System.out.println("Collision!");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean onCollision(Bullet bullet){
+        if (this.bounds.overlaps(bullet.getBounds())) {
             System.out.println("Collision!");
             return true;
         }
