@@ -26,6 +26,8 @@ public class GameScreen extends ScreenAdapter {
     Array<Ghost> ghosts;
     Array<Player> players;
 
+    GameOverOverlay gameOverOverlay;
+
     @Override
     public void show() {
         // Set up the necessary objects
@@ -48,6 +50,7 @@ public class GameScreen extends ScreenAdapter {
         System.out.print("\n");
         ghosts = new Array<Ghost>();
         addGhosts(false);
+        gameOverOverlay = new GameOverOverlay();
 
     }
 
@@ -80,7 +83,10 @@ public class GameScreen extends ScreenAdapter {
         for (Ghost ghost: ghosts) {
             ghost.update(delta);
             if(ghost.onCollision())
-                ghosts.removeIndex(ghost.getIndex());
+                ghosts.removeValue(ghost, true);
+        }
+        if(player.getLives() <= 0){
+            gameOverOverlay.render(batch);
         }
         // Set the projection matrix
         batch.setProjectionMatrix(viewport.getCamera().combined);

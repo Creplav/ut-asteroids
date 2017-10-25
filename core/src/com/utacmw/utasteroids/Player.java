@@ -64,8 +64,6 @@ public class Player {
         // Y: ScreenHeight / 2 - SpriteSize / 2
         sprite.setPosition( viewport.getScreenWidth() / 2 + this.sprite.getWidth() / 2,
                 viewport.getScreenHeight() / 2 - this.sprite.getHeight() / 2);
-        //set bound
-        //viewport.setScreenBounds(0,0,200,200);
 
         //Sets the player's position to the sprite's x and y value
         this.position.x = sprite.getX();
