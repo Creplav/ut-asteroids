@@ -106,6 +106,8 @@ public class Ghost {
      */
     public void update(float delta){
         bounds = sprite.getBoundingRectangle();
+        bounds.x -= 15;
+        bounds.y -= 15;
         // Move the ghost
         move(delta);
         if(onCollision()){

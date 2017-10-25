@@ -186,6 +186,8 @@ public class Player {
      */
     public void update(float delta){
         bounds = sprite.getBoundingRectangle();
+        bounds.x -= 20;
+        bounds.y -= 20;
         updatePosition();
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             turn(-TURN_SPEED * delta);
