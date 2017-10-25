@@ -8,7 +8,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		// Set the application to be fullscreen as default
-		//config.fullscreen = true;
+		config.fullscreen = true;
 		config.title = "UT Asteroids";
 		new LwjglApplication(new UtAsteroidsGame(), config);
 	}

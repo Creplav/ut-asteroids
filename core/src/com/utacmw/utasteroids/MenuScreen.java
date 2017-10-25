@@ -85,5 +85,9 @@ public class MenuScreen extends ScreenAdapter {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             game.setScreen(new GameScreen(game));
         }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            Gdx.app.exit();
+        }
     }
 }
